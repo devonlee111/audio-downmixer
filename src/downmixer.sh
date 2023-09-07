@@ -7,12 +7,15 @@ CHANNEL_STEREO="stereo"
 # List of popular containers
 # Taken from answer on this superuser question
 # https://superuser.com/questions/300897/what-is-a-codec-e-g-divx-and-how-does-it-differ-from-a-file-format-e-g-mp
-MEDIA_CONTAINERS="AVI,MP4,MKV,WebM,"
+MEDIA_CONTAINERS=".avi,.mp4,.mkv,.webm,"
 
-# List of lossless audio formats supported by container list
+# List of common lossless and lossy audio formats supported by container list
+# List of supported codecs curated to include most likely/widely used codecs
 # Taken from wikipedia
 # https://en.wikipedia.org/wiki/Comparison_of_video_container_formats
-LOSSLESS_AUDIO_CODECS="ALAC,ALS,DTSHD,FLAC,MLP,SLS,TRUEHD,WMA"
+# Listed names are short names derived from ffmpeg source code
+LOSSLESS_AUDIO_CODECS="alac,mp4als,dtshd,flac,mlp,truehd"
+LOSSY_AUDIO_CODECS="aac,ac3,atrac3,dts,eac3,mp1,mp2,mp3,opus,vorbis"
 
 # Downmix Functions
 # Taken from answers on this superuser question
