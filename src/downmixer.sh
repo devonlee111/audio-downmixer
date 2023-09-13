@@ -3,9 +3,6 @@
 # don't exit on error
 set +e
 
-inputFile="$1"
-outputFile="downmixed-$1"
-
 # Sample FFMPEG command
 # Input stream has 2 5.1 audio streams in different languages that both need to be downmixed
 # Audio streams are stream 0:1 and 0:2
@@ -43,6 +40,9 @@ DOWNMIX_ROBERT_COLLIER="pan=stereo|c0=c2+0.30*c0+0.30*c4|c1=c2+0.30*c1+0.30*c5"
 
 DONT_DOWNMIX="N/A"
 
+inputFile="$1"
+outputFile="downmixed-$1"
+
 # Base ffmpeg args for copying all video, subtitle, and ttf streams
 FFMPEG_BASE_ARGS="-i $inputFile -map 0:v -c:v copy -map 0:s -c:s copy -map 0:t -c:t copy"
 
@@ -59,6 +59,21 @@ containsElement () {
 	for e; do [[ "$e" == "$match" ]] && return 0; done
 	return 1
 }
+
+# Helper function to check if file is supported type
+supportedFile () {
+	for ext in "${MEDIA_CONTAINERS[@]}"; do
+		if [[ "$inputFile" == "*.$ext" ]]; then
+			return 1
+		fi
+	done
+	return 0
+}
+
+if ! supportedFile; then
+	echo "unsupported file type"
+	exit
+fi
 
 # Use ffprobe to get audio stream information from file
 audioStreams="$(ffprobe -show_entries stream=index,codec_type,codec_name,sample_rate,channel_type,channel_layout:stream_tags=language -of compact "$inputFile" -v 0 | grep audio)"
