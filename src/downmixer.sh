@@ -151,7 +151,7 @@ while IFS= read -r line; do
 	shortenedInfo="$streamIndex|$losslessness|$sampleRate"
 
 	# Check if we've seen this language before
-	if [[ -z "${streamInfo[$LANGUAGE]}" ]]; then
+	if [[ -z "${streamInfo[$language]}" ]]; then
 		# Is a language we haven't seen before. Add it to the map
 		echo "new language detected: $language"
 		streamInfo["$language"]="$shortenedInfo"
